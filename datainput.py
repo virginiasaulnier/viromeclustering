@@ -1,7 +1,7 @@
 from Bio import SeqIO
 from Bio.Blast import NCBIWWW
 from Bio.Blast import NCBIXML
-#somethingchanged
+
 file="/Users/Virginiasaulnier/Downloads/v1S2.consensus"
 
 largecontigs= (rec for rec in SeqIO.parse(file,"fasta") if len(rec)>2000)
