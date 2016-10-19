@@ -2,7 +2,7 @@ from Bio import SeqIO
 from Bio.Blast import NCBIWWW
 from Bio.Blast import NCBIXML
 #somethingchanged
-file="/Users/Virginiasaulnier/Downloads/v1S2short.consensus"
+file="/Users/Virginiasaulnier/Downloads/v1S2.consensus"
 
 largecontigs= (rec for rec in SeqIO.parse(file,"fasta") if len(rec)>2000)
 SeqIO.write(largecontigs, "largecontigs.fasta", "fasta")
@@ -44,23 +44,25 @@ for seq_record in SeqIO.parse("largecontigs.fasta", "fasta"):
 
 for record in blast_records:
     if seq_record.id in bacteriacontigs:
-         result_handle_virus = NCBIWWW.qblast("blastn", "nt", seq_record.seq, entrez_query="viruses[organism]" and "1:30[perc_ident]",
+         result_handle_virus = NCBIWWW.qblast("blastn", "nt", seq_record.seq, entrez_query="viruses[organism] AND 1:30[perc_ident]",
                                            expect=.0001)
          blast_records_virus = NCBIXML.parse(result_handle_virus)
 
          for record in blast_records_virus:
             viralcontigs.append(seq_record.id)
-         print(viralcontigs)
+
+print(viralcontigs)
 
 
-#
-# for record in blast_records:
-#     if seq_record.id in bacteriacontigs:
-#         result_handle_viralprotein=NCBIWWW.qblast("blastx", "pdb", seq_record.seq, entrez_query="viruses[organism]"and "1:30[perc_ident]",
-#                                            expect=.0001)
-#         blast_records_viralprotein = NCBIXML.parse(result_handle_viralprotein)
-#
-#         for record in blast_records_viralprotein:
-#             viralcontigs.append(seq_record.id)
-#         print(viralcontigs)
+
+for record in blast_records:
+    if seq_record.id in bacteriacontigs:
+        result_handle_viralprotein=NCBIWWW.qblast("blastx", "pdb", seq_record.seq, entrez_query="viruses[organism] AND 1:30[perc_ident]",
+                                           expect=.0001)
+        blast_records_viralprotein = NCBIXML.parse(result_handle_viralprotein)
+
+        for record in blast_records_viralprotein:
+            viralcontigs.append(seq_record.id)
+
+print(viralcontigs)
 
