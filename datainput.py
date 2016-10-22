@@ -6,13 +6,13 @@ file="/Users/Virginiasaulnier/Downloads/v1S2.consensus"
 
 largecontigs= (rec for rec in SeqIO.parse(file,"fasta") if len(rec)>2000)
 SeqIO.write(largecontigs, "largecontigs.fasta", "fasta")
-for seq_record in SeqIO.parse("largecontigs.fasta", "fasta"):
-    print(seq_record.id)
-    print(repr(seq_record.seq))
-    print(len(seq_record))
+#for seq_record in SeqIO.parse("largecontigs.fasta", "fasta"):
+    # print(seq_record.id)
+    # print(repr(seq_record.seq))
+    # print(len(seq_record))
 
 
-x = 1
+#x = 1
 
 bacteriacontigs = []
 def add(i, s):
@@ -35,10 +35,11 @@ for seq_record in SeqIO.parse("largecontigs.fasta", "fasta"):
     result_handle = NCBIWWW.qblast("blastn","nt", seq_record.seq, entrez_query="bacteria[organism]", expect=.0001)
     blast_records = NCBIXML.parse(result_handle)
 
+
     for record in blast_records:
         bacteriacontigs.append(seq_record.id)
     print('in seq record')
-
+print(bacteriacontigs)
 
 #print(bacteriacontigs)
 
@@ -50,7 +51,7 @@ for record in blast_records:
 
          for record in blast_records_virus:
             viralcontigs.append(seq_record.id)
-
+         print('in virus blast')
 print(viralcontigs)
 
 
@@ -63,6 +64,6 @@ for record in blast_records:
 
         for record in blast_records_viralprotein:
             viralcontigs.append(seq_record.id)
-
+        print('in viral protein blast')
 print(viralcontigs)
 
