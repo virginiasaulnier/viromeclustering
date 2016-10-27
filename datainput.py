@@ -45,10 +45,10 @@ print(bacteriacontigs)
 
 #print(bacteriacontigs)
 
-for record in blast_records:
+for seq_record in SeqIO.parse("largecontigs.fasta", "fasta"):
     if seq_record.id in bacteriacontigs:
          logging.debug('This is a log message in virus blast.')
-         result_handle_virus = NCBIWWW.qblast("blastn", "nt", seq_record.seq, entrez_query="viruses[organism]")
+         result_handle_virus = NCBIWWW.qblast("blastn", "nt", seq_record.seq, entrez_query="viruses[organism] AND perc_ident[1:30]", expect=.0001)
          blast_records_virus = NCBIXML.parse(result_handle_virus)
 
          for record in blast_records_virus:
@@ -57,10 +57,11 @@ print(viralcontigs)
 
 
 
-for record in blast_records:
+for seq_record in SeqIO.parse("largecontigs.fasta", "fasta"):
     if seq_record.id in bacteriacontigs:
         logging.debug('This is a log message in viral protein blast.')
-        result_handle_viralprotein=NCBIWWW.qblast("blastx", "pdb", seq_record.seq, entrez_query="viruses[organism]")
+        result_handle_viralprotein=NCBIWWW.qblast("blastx", "pdb", seq_record.seq, entrez_query="viruses[organism] AND perc_ident[1:30]", expect=.0001)
+        blast_records_viralprotein=NCBIXML.parse(result_handle_viralprotein)
 
         for record in blast_records_viralprotein:
             viralcontigs.append(seq_record.id)
