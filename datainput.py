@@ -4,7 +4,7 @@ from Bio.Blast import NCBIXML
 import logging
 logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
 logging.debug('This is a log message.')
-file="/Users/Virginiasaulnier/Downloads/v1S2short.consensus"
+file="/Users/Virginiasaulnier/Downloads/v1S2tiny.consensus"
 
 largecontigs= (rec for rec in SeqIO.parse(file,"fasta") if len(rec)>2000)
 SeqIO.write(largecontigs, "largecontigs.fasta", "fasta")
@@ -41,6 +41,7 @@ for seq_record in SeqIO.parse("largecontigs.fasta", "fasta"):
     for record in blast_records:
         bacteriacontigs.append(seq_record.id)
         logging.debug('This is a log message appending bacteria seq_records.')
+        print(seq_record)
 print(bacteriacontigs)
 
 #print(bacteriacontigs)
@@ -53,6 +54,7 @@ for seq_record in SeqIO.parse("largecontigs.fasta", "fasta"):
 
          for record in blast_records_virus:
             viralcontigs.append(seq_record.id)
+            print(seq_record)
 print(viralcontigs)
 
 
@@ -65,5 +67,6 @@ for seq_record in SeqIO.parse("largecontigs.fasta", "fasta"):
 
         for record in blast_records_viralprotein:
             viralcontigs.append(seq_record.id)
+            print(seq_record)
 print(viralcontigs)
 
