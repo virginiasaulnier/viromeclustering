@@ -86,9 +86,9 @@ clusterids=set(bacteriacontigs) - set(viralcontigs)
 print(clusterids)
 
 for seq_record in SeqIO.parse("largecontigs.fasta", "fasta"):
-    if seq_record.id in bacteriacontigs:
-        while(i==0):
-            clustercontigs.append(seq_record)
-            i=i+1
+    if seq_record.id in clusterids:
+        clustercontigs.append(seq_record)
 
-print(clustercontigs)
+
+print list(clustercontigs)
+SeqIO.write(clustercontigs, "clustercontigs.fasta", "fasta")
