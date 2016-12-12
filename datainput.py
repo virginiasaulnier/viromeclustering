@@ -1,10 +1,13 @@
+import logging
+import os
+
 from Bio import SeqIO
 from Bio.Blast import NCBIWWW
 from Bio.Blast import NCBIXML
-import logging
+
 logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
 logging.debug('This is a log message.')
-file="/Users/Virginiasaulnier/Downloads/v1S2tiny.consensus"
+file="/Users/Virginiasaulnier/Downloads/v1S2short.consensus"
 
 largecontigs= (rec for rec in SeqIO.parse(file,"fasta") if len(rec)>2000)
 SeqIO.write(largecontigs, "largecontigs.fasta", "fasta")
@@ -92,3 +95,6 @@ for seq_record in SeqIO.parse("largecontigs.fasta", "fasta"):
 
 print list(clustercontigs)
 SeqIO.write(clustercontigs, "clustercontigs.fasta", "fasta")
+
+retvalue= os.popen("/users/virginiasaulnier/Downloads/usearch9.1.13_i86osx32 -cluster_agg clustercontigs.fasta -treeout tree.phy -clusterout clusters.txt -id 0.80 -linkage min").readlines()
+print retvalue
