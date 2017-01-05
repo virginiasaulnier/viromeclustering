@@ -15,7 +15,7 @@ file="/Users/Virginiasaulnier/Downloads/v1S2.consensus"
 largecontigs= (rec for rec in SeqIO.parse(file,"fasta") if len(rec)>2000)
 SeqIO.write(largecontigs, "largecontigs.fasta", "fasta")
 
-#creating 3 arrays to store contigs of interest
+#creating 3 arrays to store contig ids of interest
 bacteriacontigs = []
 def add(i, s):
     size = len(bacteriacontigs)
